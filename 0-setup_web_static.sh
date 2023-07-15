@@ -46,9 +46,13 @@ ln -s "$target_path" "$link_path"
 # Give ownership of a folder to user and group
 chown -R ubuntu:ubuntu /data/
 
-sed -i "/error_page 404 \/404.html;/a \\\n\tlocation /hbnb_static { \
-        \n\t\talias /data/web_static/current/; \
-        \n\t\tautoindex off; \
-        \n\t}" /etc/nginx/sites-available/default
+# Check if /hbnb_static exists in the configuration file
+if ! grep -q "location /hbnb_static {" /etc/nginx/sites-available/default; then
+	# Add /hbnb_static vlock if it does not exist
+	sed -i "/error_page 404 \/404.html;/a \\\n\tlocation /hbnb_static { \
+        	\n\t\talias /data/web_static/current/; \
+	        \n\t\tautoindex off; \
+        	\n\t}" /etc/nginx/sites-available/default
+fi
 
 service nginx restart
