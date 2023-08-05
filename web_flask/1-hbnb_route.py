@@ -11,6 +11,7 @@ def display():
     """ Returns message to be displayed """
     return "Hello HBNB"
 
+
 @app.route("/hbnb", strict_slashes=False)
 def display_hbnb():
     """ Returns message to be displayed """
